@@ -109,12 +109,14 @@
 					this.$refs.shopName.$data.currentValue=data.shopInfo.shopName;
 					this.shopTypeId=data.shopInfo.shopTypeId;
                     this.shopPic="http://127.0.0.1/"+data.shopInfo.shopPic;
+                    console.log(111,this.shopTypeId)
 				})
 			}
 		},
 		mounted(){
 			this.getShopList();
 			this.shopTypeId = this.typeId;
+			console.log(111,this.shopTypeId)
 			if(this.shopId.length>0){
 				this.getShopInfo();
 			}

@@ -15,6 +15,49 @@ module.exports.insertOne=function(coll,obj,cb){
         db.collection(coll).insertOne(obj,cb)
     })
 }
+
+module.exports.getShopGoodsType = function(whereObj,cb){
+	_connect(function(db){
+		db.collection("goodsList").aggregate([
+			{$sort:{addTime:-1}},
+			{$match:whereObj},
+			{
+				$lookup:{
+                    from:"shopList",
+                    localField:"shopId",
+                    foreignField:"_id",
+                    as: 'goodsInfo'
+                }
+			},
+			{
+				$lookup:{
+                    from:"goodsTypeList",
+                    localField:"goodsTypeId",
+                    foreignField:"_id",
+                    as: 'goods'
+                }
+			},
+		]).toArray(cb);
+	})
+}
+
+module.exports.getGoodsList = function(whereObj,cb){
+	_connect(function(db){
+		db.collection("goodsTypeList").aggregate([
+			{$sort:{addTime:-1}},
+			{$match:whereObj},
+			{
+				$lookup:{
+                    from:"shopList",
+                    localField:"shopId",
+                    foreignField:"_id",
+                    as: 'goodsInfo'
+                }
+			},
+		]).toArray(cb);
+	})
+}
+
 module.exports.getShopList=function(whereObj,skip,limit,cb){
     _connect(function(db){
         db.collection("shopList").aggregate([

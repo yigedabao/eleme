@@ -39,8 +39,8 @@
 			<el-table-column label="操作" >
 				<template slot-scope="scope">
 					<el-button  size="mini" @click="openType(scope.row._id)">编辑</el-button>
-					<el-button size="mini" type="danger" @click="delShopTypeList(scope.$index,scope.row._id)">删除</el-button>
                     <el-button  size="mini" type="primary" @click="openShop(scope.row._id)">添加店铺</el-button>
+                    <el-button size="mini" type="danger" @click="delShopTypeList(scope.$index,scope.row._id)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>

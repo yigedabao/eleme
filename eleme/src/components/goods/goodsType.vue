@@ -12,18 +12,9 @@
 				</el-form-item>
 			</el-form>
 		<el-table :data="goodsTypeList" style="width: 100%">
-			<el-table-column width="200" prop="name" label="商品类别">
-				<template slot-scope="scope">
-					{{scope.row.goodsTypeName}}
-				</template>
+			<el-table-column width="200" prop="goodsTypeName" label="商品类别名称">
 			</el-table-column>
-			<el-table-column label="商品类别图片">
-				<template slot-scope="scope">
-					 <div>
-                        <img width="100" :src="scope.row.goodsTypePic | imgUrl" alt="">
-                    </div>
-				</template>
-			</el-table-column>
+			<el-table-column label="所属店铺" prop="goodsInfo[0].shopName"></el-table-column>
 			<el-table-column prop="date" label="添加时间">
 				<template slot-scope="scope">
 					<i class="el-icon-time">
@@ -35,26 +26,34 @@
 			<el-table-column label="操作" >
 				<template slot-scope="scope">
 					<el-button  size="mini">编辑</el-button>
-					<el-button size="mini" type="danger" @click="delGoodsTypeList(scope.row._id)">删除</el-button>
-                    <el-button  size="mini" type="primary">添加商品</el-button>
+                    <el-button  size="mini" type="primary" @click="openGoods(scope.row._id)">添加商品</el-button>
+                    <el-button size="mini" type="danger" @click="delGoodsTypeList(scope.row._id)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
-		<addGoodsType :getGoodsTypeList="getGoodsTypeList" :dialogFormVisible.sync="dialogFormVisible"></addGoodsType>
+		<addGoodsType v-if="dialogFormVisible" :getGoodsTypeList="getGoodsTypeList" :dialogFormVisible.sync="dialogFormVisible"></addGoodsType>
+		<addGoods v-if="goodsVisible" :goodsId="goodsId" :goodsVisible.sync="goodsVisible"></addGoods>
 	</div>
 </template>
 
 <script>
 	import addGoodsType from "./addGoodsType";
+	import addGoods from "./addGoods"
 	export default {
 		name: "goods-type",
 		data(){
 			return{
 				dialogFormVisible:false,
-				goodsTypeList:[]
+				goodsVisible:false,
+				goodsTypeList:[],
+				goodsId:""
 			}
 		},
 		methods:{
+			openGoods(id){
+				this.goodsId = id;
+				this.goodsVisible = true
+			},
 			getGoodsTypeList(){
 				this.$ajax.get("/getGoodsTypeList",{
 					params:{
@@ -89,7 +88,8 @@
 			}
 		},
 		components:{
-			addGoodsType
+			addGoodsType,
+			addGoods
 		},
 		mounted(){
 			this.getGoodsTypeList();

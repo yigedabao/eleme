@@ -43,7 +43,7 @@
 						</el-menu-item>
 						<el-menu-item index="3" @click="$router.push('/shopManage')">
 							<i class="el-icon-menu"></i>
-							<span slot="title" >店铺管理</span>
+							<span slot="title" >店铺信息管理</span>
 						</el-menu-item>
 						<el-menu-item index="4" @click="$router.push('/goodsType')">
 							<i class="el-icon-menu"></i>

@@ -25,15 +25,18 @@
 				</template>
 			</el-table-column>
 	
-			<el-table-column label="操作">
+			<el-table-column label="操作" width="400">
 				<template slot-scope="scope">
 					<el-button  size="mini" @click="openShopVisible(scope.row._id)">编辑</el-button>
+					<el-button  size="mini" type="primary" @click="openGoodsVisible(scope.row._id)">添加商品</el-button>
+					<el-button  size="mini" type="primary" @click="openGoodsTypeVisible(scope.row._id)">添加商品类别</el-button>
 					<el-button size="mini" type="danger" @click="delShopLists(scope.row._id)">删除</el-button>
                 </template>
 			</el-table-column>
 		</el-table>
-		
+		<addGoodsType v-if="dialogFormVisible" :shopId="shopId" :dialogFormVisible.sync="dialogFormVisible"></addGoodsType>
 		<addShopManage v-if="shopVisible" :shopId="shopId" :getShopLists="getShopLists" :shopVisible.sync="shopVisible"></addShopManage>
+		<addGoods v-if="goodsVisible" :shopId="shopId" :goodsVisible.sync="goodsVisible"></addGoods>
 		<div class="block">
 			<el-pagination  @current-change="getShopLists" :current-page.sync="pageIndex"  layout="prev, pager, next, jumper" :page-count="pageSum">
 			</el-pagination>
@@ -43,11 +46,15 @@
 
 <script>
 	import addShopManage from "./addShopManage";
+	import addGoodsType from "../goods/addGoodsType";
+	import addGoods from "../goods/addGoods";
 	export default{
 		name:"shop-manage",
 		data(){
 			return{
+				dialogFormVisible:false,
 				shopVisible:false,
+				goodsVisible:false,
 				shopList:[],
 				pageIndex:1,
 				pageSum:1,
@@ -55,9 +62,17 @@
 			}
 		},
 		methods:{
+			openGoodsVisible(id){
+				this.shopId=id;
+				this.goodsVisible = true
+			},
 			openShopVisible(id){
 				this.shopVisible=true;
 				this.shopId=id;
+			},
+			openGoodsTypeVisible(id){
+				this.shopId=id;
+				this.dialogFormVisible = true
 			},
 			delShopLists(row){
 				this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
@@ -93,7 +108,9 @@
 			},
 		},
 		components:{
-			addShopManage
+			addShopManage,
+			addGoodsType,
+			addGoods
 		},
 		 mounted(){
             this.getShopLists(this.pageIndex);

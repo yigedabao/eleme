@@ -2,7 +2,7 @@ export default {
     currency(v,obj){
         obj=obj || {};
         obj.num=obj.num || 2;
-        obj.type=obj.type || "$";
+        obj.type=obj.type || "¥";
         return obj.type+v.toFixed(obj.num);
     },
     date(v){
@@ -16,7 +16,15 @@ export default {
     },
     imgUrl(v){
         return "http://127.0.0.1/"+v;
+    },
+    hot(v){
+    	if(v === 1){
+    		return "是"
+    	}else{
+    		return "否"
+    	}
     }
+    
 }
 
 
