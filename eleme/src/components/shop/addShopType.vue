@@ -32,14 +32,18 @@
 			addShopType() {
 //				this.$refs.upload.clearFiles();   //清除组件
 				var formdata = new FormData();
-				formdata.set("shopTypeName", this.$refs.shopTypeName.$data.currentValue);
-				formdata.set("shopTypePic", document.querySelector(".el-upload__input").files[0]);
+				if(this.$refs.shopTypeName.$data.currentValue.length > 0){
+					formdata.set("shopTypeName", this.$refs.shopTypeName.$data.currentValue);
+					formdata.set("shopTypePic", document.querySelector(".el-upload__input").files[0]);					
+				}else{
+					this.$message.error("请完善添加信息");
+				}	
 				this.$ajax.post("/addShopType", formdata)
 					.then(data => {
 //						this.dialogFormVisible = false;
-						this.$emit("update:dialogFormVisible",false) ;  //改变传值方式
-						this.getShopTypeList();
 						if(data.ok === 1) {
+							this.getShopTypeList();
+							this.$emit("update:dialogFormVisible",false) ;  //改变传值方式
 							this.$message({
 								message: data.msg,
 								type: 'success'

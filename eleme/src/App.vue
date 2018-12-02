@@ -53,6 +53,10 @@
 							<i class="el-icon-menu"></i>
 							<span slot="title">商品信息管理</span>
 						</el-menu-item>
+						<el-menu-item index="6" @click="$router.push('/advList')">
+							<i class="el-icon-menu"></i>
+							<span slot="title">广告信息管理</span>
+						</el-menu-item>
 					</el-menu>
 				</el-col>
 				</el-row>

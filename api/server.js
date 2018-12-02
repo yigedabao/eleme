@@ -4,6 +4,8 @@ const app=express();
 const admin = require("./router/admin");
 const shop = require("./router/shop");
 const goods = require("./router/goods");
+const advs = require("./router/advs");
+const home = require("./router/home");
 app.use(express.static("./upload"));
 app.use(bodyParser.json());
 app.all("*",function(req,res,next){
@@ -14,6 +16,43 @@ app.all("*",function(req,res,next){
 });
 
 
+//**********************************前端渲染******************************************
+//获取商店列表
+app.get("/getShopType",home.getShopType);
+//获取静态广告
+app.get("/getAdvsStop",home.getAdvsStop);
+//获取动态广告
+app.get("/getAdvsRun",home.getAdvsRun);
+//获取店铺列表
+app.get("/homegetShopList",home.homegetShopList);
+//根据类别获取店铺信息
+app.get("/getShopListByType",home.getShopListByType);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//********************************后台管理**********************************
+
+
+//************************广告******************************
+//添加广告
+app.post("/addAdvs",advs.addAdvs);
+//获取广告信息
+app.get("/getAdvsList",advs.getAdvsList);
+//删除广告
+app.get("/delAdvsList",advs.delAdvsList);
 //************************商品分类******************************
 //添加商品类别
 app.post("/addGoodsType",goods.addGoodsType);

@@ -84,7 +84,7 @@ module.exports.getAdminLogList = function(req, res) {
 	var pageIndex = req.query.pageIndex / 1;
 	var pageSum = 1;
 	var pageNum = 5;
-	db.count("adminLog", {}, function(count) {
+	db.count("adminLog",{}, function(count) {
 		var pageSum = Math.ceil(count / pageNum); //总页数
 		if(pageSum < 0)
 			pageSum = 1;

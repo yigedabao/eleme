@@ -3,10 +3,10 @@
 		<h3>管理员日志信息</h3>
 		<el-form :inline="true" :model="formInline" class="demo-form-inline">
 			<el-form-item label="搜索框">
-				<el-input v-model="formInline.user" placeholder="账号"></el-input>
+				<el-input v-model="formInline.user" placeholder="账号" ref="adminName" ></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button type="primary" @click="onSubmit">查询</el-button>
+				<el-button type="primary" @click="getAdminLogList(pageIndex)">查询</el-button>
 			</el-form-item>
 		</el-form>
 		<el-table :data="adminLogList" style="width: 100%">
@@ -60,9 +60,6 @@
 			}
 		},
 		methods: {
-			onSubmit() {
-				console.log('submit!');
-			},
 			handleDelete(index, row) {
 				this.$confirm('此操作将永久删除该数据, 是否继续?', '提示', {
 					confirmButtonText: '确定',

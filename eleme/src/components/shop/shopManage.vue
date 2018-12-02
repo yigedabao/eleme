@@ -24,7 +24,13 @@
                     </div>
 				</template>
 			</el-table-column>
-	
+			<el-table-column prop="date" label="添加时间">
+				<template slot-scope="scope">
+					<i class="el-icon-time">
+						{{scope.row.addTime | date}}
+					</i>
+				</template>
+			</el-table-column>
 			<el-table-column label="操作" width="400">
 				<template slot-scope="scope">
 					<el-button  size="mini" @click="openShopVisible(scope.row._id)">编辑</el-button>

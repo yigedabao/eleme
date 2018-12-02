@@ -18,6 +18,16 @@ for(var key in filters){
 	Vue.filter(key,filters[key]);
 }
 
+//------路由拦截
+router.beforeEach((to,from,next)=>{//---------全局拦截器：默认所有都拦截
+    if(localStorage.adminId && localStorage.adminName){
+        next();
+    }else{
+        store.commit("OUT_LOGIN");
+        // next();//---------所有都允许放行
+    }
+})
+
 axios.interceptors.request.use((config)=>{
     config.url="http://127.0.0.1"+config.url;
     return config;

@@ -41,7 +41,7 @@
 
 <script>
 	export default{
-		props:["goodsVisible","goodsId","shopId","getGoodsList"],
+		props:["goodsVisible","goodsId","shopId","getGoodsList","goodId"],
 		name:"add-goods",
 		data(){
 			return{
@@ -93,7 +93,6 @@
 				this.$ajax.get("/getGoodsTypeLists")
 					.then(data=>{
 						this.goodsTypeList = data.goodsTypeList;
-						console.log(data.goodsTypeList)
 					})
 			},
 			getShopListGood() {
@@ -108,8 +107,11 @@
 		mounted(){
 			this.getGoodsTypeLists();
 			this.getShopListGood();
-			this.goodsTypeId = this.goodsId;
+			this.goodsTypeId = this.goodsId;				
 			this.shopsId = this.shopId;
+			if(this.goodId){
+				this.shopsId = this.goodId
+			}			
 		}
 	}
 </script>

@@ -26,13 +26,13 @@
 			<el-table-column label="操作" >
 				<template slot-scope="scope">
 					<el-button  size="mini">编辑</el-button>
-                    <el-button  size="mini" type="primary" @click="openGoods(scope.row._id)">添加商品</el-button>
+                    <el-button  size="mini" type="primary" @click="openGoods(scope.row._id,scope.row.shopId)">添加商品</el-button>
                     <el-button size="mini" type="danger" @click="delGoodsTypeList(scope.row._id)">删除</el-button>
 				</template>
 			</el-table-column>
 		</el-table>
 		<addGoodsType v-if="dialogFormVisible" :getGoodsTypeList="getGoodsTypeList" :dialogFormVisible.sync="dialogFormVisible"></addGoodsType>
-		<addGoods v-if="goodsVisible" :goodsId="goodsId" :goodsVisible.sync="goodsVisible"></addGoods>
+		<addGoods v-if="goodsVisible" :goodId="goodId" :goodsId="goodsId" :goodsVisible.sync="goodsVisible"></addGoods>
 	</div>
 </template>
 
@@ -46,11 +46,13 @@
 				dialogFormVisible:false,
 				goodsVisible:false,
 				goodsTypeList:[],
-				goodsId:""
+				goodsId:"",
+				goodId:""
 			}
 		},
 		methods:{
-			openGoods(id){
+			openGoods(id,shopId){
+				this.goodId = shopId
 				this.goodsId = id;
 				this.goodsVisible = true
 			},

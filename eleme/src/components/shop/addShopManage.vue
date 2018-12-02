@@ -49,10 +49,13 @@
             },
 			addShopManage() {
 				var formdata = new FormData();
-				formdata.set("shopName", this.$refs.shopName.$data.currentValue);
-				formdata.set("shopPic", document.querySelector(".el-upload__input").files[0]);
-				formdata.set("shopTypeId",this.shopTypeId);
-				
+				if(this.$refs.shopName.$data.currentValue.length > 0){
+					formdata.set("shopName", this.$refs.shopName.$data.currentValue);					
+					formdata.set("shopPic", document.querySelector(".el-upload__input").files[0]);
+					formdata.set("shopTypeId",this.shopTypeId);
+				}else{
+					this.$message.error("请完善添加信息");
+				}		
 				if(this.shopId.length>0){
 					formdata.set("shopId",this.shopId);
 					this.$ajax.put("/addShop",formdata)

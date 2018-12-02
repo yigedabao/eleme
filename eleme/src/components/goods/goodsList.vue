@@ -34,6 +34,13 @@
 					{{scope.row.goodsPrice/1 | currency}}
 				</template>
 			</el-table-column>
+			<el-table-column prop="date" label="添加时间">
+				<template slot-scope="scope">
+					<i class="el-icon-time">
+						{{scope.row.addTime | date}}
+					</i>
+				</template>
+			</el-table-column>
 			<el-table-column label="操作" width="200">
 				<template slot-scope="scope">
 					<el-button  size="mini" >编辑</el-button>
