@@ -22,7 +22,7 @@
 		</div>
 		<div class="lists">
 			<ul v-infinite-scroll="getShopListByType" infinite-scroll-disabled="loading" infinite-scroll-distance="10">
-				<div class="shop-list" v-for="item in shopList">
+				<div class="shop-list" v-for="item in shopList" @click="openDetails(item._id,1)">
 					<div class="shop-info">
 						<a>
 							<img class="shop-pic" :src="item.shopPic | imgUrl" />
@@ -71,6 +71,15 @@
 					console.log(data);
 				})
 			},
+			openDetails(id,type){
+				this.$router.push({
+					path: "/details",
+					query: {
+						id: id,
+						type:type
+					}
+				});
+			}
 		},
 		mounted() {
 			this.shopTypeName = this.$route.query.shopTypeName;
@@ -78,7 +87,7 @@
 	}
 </script>
 
-<style scoped>
+<style >
 	body,
 	ul,
 	li,

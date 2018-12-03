@@ -27,7 +27,8 @@ app.get("/getAdvsRun",home.getAdvsRun);
 app.get("/homegetShopList",home.homegetShopList);
 //根据类别获取店铺信息
 app.get("/getShopListByType",home.getShopListByType);
-
+//根据店铺id获取商品
+app.get("/getGoodsByshopId",home.getGoodsByshopId);
 
 
 

@@ -77,3 +77,18 @@ module.exports.getShopListByType = function(req,res){
 		})
 	})
 }
+
+module.exports.getGoodsByshopId = function(req,res){
+	var id = mongodb.ObjectID(req.query.id)
+	console.log(id);
+	var whereObj = {
+		shopId: id
+	}
+	console.log(whereObj)
+	db.getShopGoodsType(whereObj,function(err,goodsList){
+		res.json({
+			ok:1,
+			goodsList
+		})
+	})
+}
