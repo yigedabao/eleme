@@ -16,6 +16,32 @@ module.exports.insertOne=function(coll,obj,cb){
     })
 }
 
+module.exports.getGoodsAndType = function(whereObj,cb){
+	_connect(function(db){
+		db.collection("goodsTypeList").aggregate([
+			{$sort:{addTime:-1}},
+			{$match:whereObj},
+			{
+				$lookup:{
+                    from:"goodsList",
+                    localField:"_id",
+                    foreignField:"goodsTypeId",
+                    as: 'goodsInfo'
+                }
+			},
+			{
+				$lookup:{
+                    from:"shopList",
+                    localField:"shopId",
+                    foreignField:"_id",
+                    as: 'goods'
+                }
+			},
+		]).toArray(cb);
+	})
+}
+
+
 module.exports.getShopGoodsType = function(whereObj,cb){
 	_connect(function(db){
 		db.collection("goodsList").aggregate([

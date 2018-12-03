@@ -10,7 +10,8 @@ import axios from "axios";
 import MintUI from 'mint-ui';
 import 'mint-ui/lib/style.css';
 import filters from "@/filters";
-import shop from '@/components/demo/shop'
+import shop from '@/components/demo/shop';
+import $ from 'jquery';
 
 Vue.prototype.$ajax = axios;
 Vue.config.productionTip = false
@@ -38,3 +39,4 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+

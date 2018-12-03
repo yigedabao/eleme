@@ -27,23 +27,22 @@
 	import shopType from "./shopType";
 	import advs from "./advs";
 	import tabulate from "./tabulate";
+	$(window).scroll(function() {
+	let sTop = $(window).scrollTop();
+	if(sTop > 40) {
+		$(".header_bottom").css("position", "fixed");
+		$(".header_bottom").css("top", "0");
+		$(".header_bottom").css("z-index", "9999");
+		$(".header_bottom").css("width", "100%");
+	} else {
+		$(".header_bottom").css("position", "");
+	}
+
+})
+	
 	export default {
 		name: "Home",
 		methods: {
-			ceiling(){
-				window.onscroll = function(){
-					var h = 40;
-					var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-					if(scrollTop > h){
-						document.querySelector(".header_bottom").style.position = "fixed";
-						document.querySelector(".header_bottom").style.zIndex = 9999;
-						document.querySelector(".header_bottom").style.width = "100%";
-						document.querySelector(".header_bottom").style.top = 0;	
-					}else{
-						document.querySelector(".header_bottom").style.position = "";
-					}
-				}
-			}
 		},
 		components: {
 			shopType,
@@ -51,7 +50,6 @@
 			tabulate
 		},
 		mounted(){
-			this.ceiling();
 		}
 	}
 </script>

@@ -85,10 +85,13 @@ module.exports.getGoodsByshopId = function(req,res){
 		shopId: id
 	}
 	console.log(whereObj)
-	db.getShopGoodsType(whereObj,function(err,goodsList){
+	db.getGoodsAndType(whereObj,function(err,goodsTypeList){
 		res.json({
 			ok:1,
-			goodsList
+			goodsTypeList
 		})
-	})
+		console.log(goodsTypeList);
+	})  
 }
+
+
