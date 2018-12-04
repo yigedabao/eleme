@@ -58,7 +58,7 @@
 								<li v-for="item in goodsTypeList">
 									<div class="class-title">
 										{{item.goodsTypeName}}</div>
-									<div v-for="ite in item.goodsInfo">
+									<div class="item_wrap" v-for="ite in item.goodsInfo">
 										<div class="item">
 											<div class="item-left">
 												<div class="item-img">
@@ -71,6 +71,7 @@
 												<div class="price">{{ite.goodsPrice/1 | currency}}</div>
 											</div>
 										</div>
+										<div class="add" @click="addCar(ite._id,ite.goodsPrice/1)">+</div>
 									</div>
 								</li>
 							</ul>
@@ -84,8 +85,11 @@
 		</div>
 
 		<!--********************************************************************************-->
+		<mt-actionsheet :actions="carList" v-model="sheetVisible" cancelText="">
+		</mt-actionsheet>
 		<div class="det_footer">
-			<div class="det_car">&#xe63a;</div>
+			<div class="det_car" @click="sheetVisible=true">&#xe63a;</div>
+			<div class="shop_num">{{num}}</div>
 			<p>未选购商品<br/>另需配送费3元</p>
 			<span>¥20起送</span>
 		</div>
@@ -122,11 +126,22 @@
 			return {
 				goodsTypeList: [],
 				shopName: "",
-				shopPic: ""
+				shopPic: "",
+				num: 0,
+				goodsList: [],
+				sheetVisible: false,
+				carList: []
 			}
 		},
+		//		 goodsSum(){
+		//              var sum=0;
+		//              this.carList.forEach((v)=>{
+		//                  sum+=v.buyNum*v.money
+		//              })
+		//              return sum;
+		//         },
 		methods: {
-			
+
 			getGoodsByshopId() {
 				this.$ajax.get("/getGoodsByshopId", {
 					params: {
@@ -135,10 +150,34 @@
 				}).then(data => {
 					this.goodsTypeList = data.goodsTypeList;
 					this.shopPic = data.goodsTypeList[0].goods[0].shopPic
+					console.log(data.goodsTypeList)
 				})
 			},
+			addCar(id, Price) {
+				console.log(id);
+				this.$ajax.get("/getGoodsListById", {
+					params: {
+						id
+					}
+				}).then(data => {
+					this.goodsList = data.goodsList;
+					//				console.log(this.goodsList.goodsName);
+					this.carList.unshift({
+						id,
+						name: this.goodsList.goodsName
+					})
+					console.log(this.carList)
+				})
+				$('.det_car').css("background", "#3190E8");
+				$('.det_car').css("color", "#fff");
+				$('.shop_num').css("display", "block");
+				$('.det_footer').find("p").html("¥" + Price);
+				$('.det_footer').find("p").css("font-size", "0.4rem");
+				$('.det_footer').find("p").css("color", "white");
+				this.num = ++this.num;
+			},
 			fn() {
-				$('.left ul').on('click','li',function() {
+				$('.left ul').on('click', 'li', function() {
 					var i = $(this).index('.left ul li');
 					$('body, html').animate({
 						scrollTop: $('.right ul li').eq(i).offset().top - 40
@@ -401,6 +440,24 @@
 		border-bottom: 1px solid #eee;
 	}
 	
+	.item_wrap {
+		position: relative;
+	}
+	
+	.add {
+		position: absolute;
+		width: 0.4rem;
+		height: 0.4rem;
+		text-align: center;
+		line-height: 0.36rem;
+		font-size: 0.42rem;
+		background: #2295ff;
+		top: 70%;
+		right: 6%;
+		color: white;
+		border-radius: 50%;
+	}
+	
 	.item-left {
 		float: left;
 	}
@@ -413,7 +470,6 @@
 	.item-img {
 		width: 1.5rem;
 		height: 1.5rem;
-		background: #eee;
 	}
 	
 	.item-img img {
@@ -455,8 +511,7 @@
 		font-size: 15px;
 		border-top: 1px solid #e2e2e2;
 	}
-	
-	.footer .left {
+	/*.footer .left {
 		float: left;
 		margin: 5px 10px;
 	}
@@ -464,7 +519,14 @@
 	.footer .right {
 		float: right;
 	}
-	
+	.footer .shop_num{
+		position: absolute;
+		z-index: 9999;
+		width:0.4rem;
+		height: 0.2rem;
+		border: 20%;
+		background: red;
+	}
 	.footer .right .disable {
 		background: #dbdbdb;
 	}
@@ -477,15 +539,15 @@
 		padding: 0 15px;
 		color: #fff;
 		font-weight: bold;
-	}
+	}*/
 	
 	.det_footer {
-		position: relative;
 		height: 1.08rem;
 		position: fixed;
 		bottom: 0;
 		width: 100%;
 		background-color: rgb(61, 61, 63);
+		z-index: 9999;
 	}
 	
 	.det_footer .det_car {
@@ -502,6 +564,21 @@
 		line-height: 0.95rem;
 		font-size: 0.55rem;
 		color: #5e5e63;
+	}
+	
+	.det_footer .shop_num {
+		position: absolute;
+		width: 0.5rem;
+		height: 0.3rem;
+		border-radius: 25%;
+		background: red;
+		text-align: center;
+		line-height: 0.3rem;
+		color: white;
+		font-size: 0.12rem;
+		top: -0.3rem;
+		left: 1.05rem;
+		display: none;
 	}
 	
 	.det_footer p {

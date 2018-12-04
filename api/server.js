@@ -30,7 +30,8 @@ app.get("/getShopListByType",home.getShopListByType);
 //根据店铺id获取商品
 app.get("/getGoodsByshopId",home.getGoodsByshopId);
 
-
+//根据id获取要使用的商品
+app.get("/getGoodsListById",home.getGoodsListById);
 
 
 

@@ -90,8 +90,15 @@ module.exports.getGoodsByshopId = function(req,res){
 			ok:1,
 			goodsTypeList
 		})
-		console.log(goodsTypeList);
 	})  
 }
 
+module.exports.getGoodsListById = function(req,res){
+	db.findOneById("goodsList",req.query.id,function(err,goodsList){
+		res.json({
+			ok:1,
+			goodsList
+		})
+	})
+}
 
